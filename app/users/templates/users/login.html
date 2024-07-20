@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма входа</title>
+</head>
+<body>
+<form method="post">
+<!--    {{ form }}-->
+    {% csrf_token %}
+
+    {% if error %}
+    <p style="color: red">
+        {{ error}}
+    </p>
+    {% endif %}
+    <p>
+        <label for="username">Логин:</label>
+        <input type="text" id="username" name="username" required>
+    </p>
+    <p>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+    </p>
+
+    <button type="submit">Войти</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,148 @@
+@font-face {
+  font-family: "fontawesome1";
+  src: url("/fonts/CRA65DM.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome2";
+  src: url("/fonts/CRO55DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome3";
+  src: url("/fonts/CRO35DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome4";
+  src: url("/fonts/CRO25DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+     background-image: url('../img/image.jpeg'); /* Укажите путь к вашему изображению */
+     background-size: cover; /* Масштабирует изображение, чтобы оно полностью покрывало фон */
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+}
+h1 {
+  font-family: "fontawesome1";
+}
+
+h2 {
+  font-family: "fontawesome2";
+}
+
+h3 {
+  font-family: "fontawesome3";
+}
+
+p {
+  font-family: "fontawesome4";
+}
+
+.container {
+  max-width: 1180px;
+  padding: 20px;
+  align-items: center;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  font-family: "fontawesome2" sans-serif;
+}
+.container button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: none !important;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 2px solid rgba(0, 104, 226, 1);
+  color: rgba(0, 104, 226, 1);
+  cursor: pointer;
+  margin-right: 20px !important;
+}
+
+.logo img {
+  max-width: auto !important;
+}
+
+.square1, .square2, .personal {
+  display: flex;
+  flex-direction: row;
+  align-items: center !important;
+}
+
+.square1 img, .square2 img {
+  max-width: 50px;
+  margin-bottom: 10px;
+}
+
+.square1 h3, .square2 h3, .personal h3 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.main_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  max-width: 1180px;
+  margin-top: 50px;
+}
+
+.block {
+  position: relative;
+  text-align: center;
+}
+
+
+
+  .datetime {
+    position: absolute;
+    top: 30%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    color: rgb(5, 76, 156);
+    text-shadow: 6px 6px 8px rgba(6, 43, 78, 1.9);
+    text-align: center;
+    border-radius: 15px;
+    font-family: "fontawesome1";
+    z-index: 2;
+  }
+
+  .date, .time {
+    text-shadow: 2px 2px 4px rgba(76, 74, 199, 0.9);
+
+  }
+
+  .date {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: rgba(0, 104, 226, 1);
+  }
+
+  .time {
+    font-size: 38px;
+    color: rgba(0, 104, 226, 1);
+  }

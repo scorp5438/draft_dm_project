@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+<div class="users">
+    <h1>
+        {{ content }}
+    </h1>
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>ФИО оператора</th>
+            <th>Время (МСК)</th>
+            <th>ФИ специалиста</th>
+            <th>Результат ТЗ</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for elem in list_exam %}
+        <tr>
+            <td> {{ elem.date_exam }}</td>
+            <td> {{ elem.name_intern }}</td>
+            <td> {{ elem.time_exam }} - {{ elem.time_exam|add_minutes:30 }}</td>
+            <td> {{ elem.name_examiner }}</td>
+            <td> {{ elem.result_exam }}</td>
+            <td> {{ elem.comment_exam }} </td>
+            <td class="link" data-row={{ elem.id }} ><a href="#">Персонаж с id {{ elem.id}}</a></td>
+<!--            <td> <button class="sendDataButton" data-value="Редактировать">{{ elem.id}}</button> </td>-->
+        </tr>
+        {% endfor %}
+
+        <!-- Добавьте больше строк по необходимости -->
+        </tbody>
+    </table>
+
+{% endblock %}
