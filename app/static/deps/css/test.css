@@ -1,0 +1,120 @@
+.test2 {
+    color: rgba(16, 14, 116, 0.9);
+}
+
+body {
+     background-image: url('../img/image.jpeg'); /* Укажите путь к вашему изображению */
+     background-size: cover; /* Масштабирует изображение, чтобы оно полностью покрывало фон */
+}
+
+.users {
+    margin-left: 40px;
+}
+.header {
+    display: flex;
+}
+.menu {
+    display: flex;
+    gap: 35px;
+    list-style-type: none;
+    margin-left: 40px;
+    margin-top: 30px
+
+}
+
+/* Таблицы */
+
+
+table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-left: 40px;
+    background-color: #ffffffeb;
+}
+
+
+
+table tr {
+    position: relative;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.link a{
+    border: 0px solid white;;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+button {
+    background-color: #4CAF50; /* Зеленый фон */
+    border: none; /* Без границы */
+    color: white; /* Белый текст */
+    padding: 15px 32px; /* Внутренние отступы */
+    text-align: center; /* Выравнивание текста по центру */
+    text-decoration: none; /* Без подчеркивания текста */
+    display: inline-block; /* Строчно-блочный элемент */
+    font-size: 16px; /* Размер шрифта */
+    margin: 4px 2px; /* Внешние отступы */
+    cursor: pointer; /* Курсор в виде руки */
+    border-radius: 8px; /* Скругленные углы */
+}
+
+/* Стиль кнопки при наведении */
+button:hover {
+    background-color: #45a049; /* Темно-зеленый фон при наведении */
+}
+
+
+.button_style {
+    margin: 300px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu a {
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+
+
+
+@font-face {
+  font-family: "fontawesome1";
+  src: url("deps/font/CRA65DM.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome2";
+  src: url("deps/font/CRO55DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome3";
+  src: url("deps/font/CRO35DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome4";
+  src: url("deps/font/CRO25DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+

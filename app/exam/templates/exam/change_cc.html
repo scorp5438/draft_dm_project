@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+<div class="users button_style">
+    <button class="sendDataButton" data-value="КЦ1">КЦ1</button>
+    <button class="sendDataButton" data-value="КЦ2">КЦ2</button>
+    <button class="sendDataButton" data-value="КЦ3">КЦ3</button>
+    <script>
+        document.querySelectorAll('.sendDataButton').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var dataValue = this.getAttribute('data-value');
+                window.location.href = '/exam/?btn=' + encodeURIComponent(dataValue);
+            });
+        });
+    </script>
+</div>
+
+
+{% endblock %}
