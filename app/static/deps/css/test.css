@@ -3,9 +3,19 @@
 }
 
 body {
-     background-image: url('../img/image.jpeg'); /* Укажите путь к вашему изображению */
-     background-size: cover; /* Масштабирует изображение, чтобы оно полностью покрывало фон */
+     background: url('../img/image.jpeg') no-repeat center center fixed; /* Укажите путь к вашему изображению */
+     -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
+        /* background-size: cover;  Масштабирует изображение, чтобы оно полностью покрывало фон */
+     /* background-position: center; */
 }
+
+body, html {
+  width: 100%;
+  height: 100%;
+  }
 
 .users {
     margin-left: 40px;

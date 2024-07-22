@@ -29,14 +29,7 @@
         </div>
     </div>
 </div>
-<!--  <main class="main container">-->
-<!--   <div class="essence">-->
-<!--    <button title="Для сотрудников КолЦентра">КЦ</button>-->
-<!--  </div>-->
-<!--  <div class="essence_button">-->
-<!--    <button title="Для сотрудников 'Детский мир'">ДМ</button>-->
-<!--  </div>-->
-<!--  </main>-->
+
 <div class="table container">
     <div class="table-header">
         <table class="block">
@@ -86,13 +79,12 @@
                 <td> {{ elem.comment_exam }}</td>
                 <td>
 
-                    <div class="button-action">
-
-                            <button class="edit_exam" onclick="openEditModal({{ elem.id }})" data-value={{ elem.id }}>
-                                Редактировать стажера с id {{elem.id}}
+                        <a href="{% url "exam:edit_intern" elem.id %}">
+                            <button type="submit">
+                                Редактировать стажера с id {{ elem.id }}
                             </button>
+                        </a>
 
-                    </div>
                 </td>
             </tr>
             {% endfor %}
@@ -103,8 +95,9 @@
 
 
 
-{% if company != "dm" %}
+{% block add %}{% endblock %}
 
+{% if company != "dm"%}
     <div class="main container">
       <div class="new-row-container">
               <button formmethod="get" id="modal-open-btn" class="new_row" title="Добавить">
@@ -119,10 +112,10 @@
         <div class="modal-content">
           <span class="close-btn">&times;</span>
           <h2>Добавить стажёра</h2>
-          <form method="post" id="add-student-form" action="{% url "exam:edit_intern" %}">
+          <form method="post" id="add-student-form" action="{% url "exam:add_intern" %}">
             {% csrf_token %}
 
-            {{ form }}
+            {{ form.as_p }}
 
             <button type="submit" id="save-btn">Сохранить</button>
           </form>
@@ -131,23 +124,6 @@
 
         <!--    Конец блока добавления данных   -->
 
-        <!--    Модалка для изменения данных    -->
-
-        <div id="modal-edit" class="modal">
-        <div class="modal-content">
-          <span class="close-edit">&times;</span>
-          <h2>Изменить стажёра</h2>
-          <form method="post" id="edit-student-form" action="{% url "exam:edit_intern" %}">
-            {% csrf_token %}
-
-            {{ form }}
-
-            <button type="submit" id="save-btn-edit">Сохранить</button>
-          </form>
-        </div>
-      </div>
-
-        <!--    Конец блока изменения данных    -->
 
 
 {% endif %}
@@ -163,28 +139,7 @@
             document.getElementById('modal-edit').style.display = 'block';
             }
 
-<!--        document.querySelectorAll('.edit_exam').forEach(function(button) {-->
-<!--          button.addEventListener('click', function() {-->
-<!--            const value = this.dataset.value;-->
-<!--            localStorage.setItem('selectedExamId', value);-->
-<!--            // AJAX-запрос для отправки значения на сервер-->
-<!--            fetch('/exam/', {-->
-<!--              method: 'POST',-->
-<!--              headers: {-->
-<!--                'Content-Type': 'application/json'-->
-<!--              },-->
-<!--              body: JSON.stringify({ 'exam_id': value })-->
-<!--            })-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--              // Обработка ответа от сервера (например, обновление содержимого страницы)-->
-<!--              console.log(data); // Вывод ответа от сервера в консоль-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--              console.error('Ошибка:', error);-->
-<!--            });-->
-<!--          });-->
-<!--        });-->
+
   </script>
 
 </body>

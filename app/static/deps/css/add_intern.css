@@ -1,0 +1,32 @@
+
+.add_intern{
+
+  background-color: rgba(105, 155, 247, 1);
+  margin: 5% auto;
+  padding: 20px;
+  border: 3px solid #fcfcfc;
+  width: 50%;
+  max-width: 600px;
+  border-radius: 30px;
+  box-shadow: 0 0px 20px rgba(255, 255, 255, 0.9);
+  color: #fff;
+}
+
+.add_modal {
+
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 700px;
+  top: 0;
+  width: 100%;
+  background-color: rgb(101 151 243);
+  overflow: auto;
+}
+
+.close-btn {
+    color: red;
+    text-decoration: none;
+}
+
+

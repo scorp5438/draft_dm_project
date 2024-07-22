@@ -1,0 +1,32 @@
+{% extends "exam/testing.html" %}
+{% load static %}
+
+{% block add %}
+<link rel="stylesheet" href="{% static "deps/css/add_intern.css" %}">
+
+    <div class="add_intern add_modal">
+        <span>
+            <a class="close-btn" href="{% url "exam:exam" %}">
+                &times;
+            </a>
+        </span>
+        <h2>Редактировать</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dateInput = document.querySelector('input[type="date"]');
+        if (dateInput) {
+            dateInput.value = "{{ exam_date }}";  // используем преобразованное значение даты
+        }
+    });
+</script>
+
+{% endblock %}

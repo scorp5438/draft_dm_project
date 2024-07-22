@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 class Exam(models.Model):
@@ -27,7 +28,7 @@ class Exam(models.Model):
     name_examiner = models.CharField(max_length=60, blank=True, verbose_name="ФИ сотрудника", choices=examiner_list)
     result_exam = models.CharField(max_length=25, blank=True, choices=result_list, default="",
                                    verbose_name="Результат")
-    comment_exam = models.TextField(max_length=2000, blank=True,  verbose_name="комментарий")
+    comment_exam = models.TextField(max_length=2000, blank=True, verbose_name="комментарий")
 
     def __str__(self):
         return f"{self.name_intern} {self.cc} {self.result_exam}"

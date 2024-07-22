@@ -2,11 +2,14 @@ import datetime
 import random
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+from django.utils.decorators import method_decorator
 
-from django.views.generic import UpdateView, DetailView
+from django.views.generic import UpdateView, DetailView, TemplateView, FormView
 
-from exam.forms import AddInternForm, CcEditInternForm
+from exam.forms import AddInternForm
 from exam.models import Exam
 
 
@@ -77,108 +80,96 @@ from exam.models import Exam
 #             return redirect('exam:exam')
 #
 #     return render(request, 'exam/testing.html')
-#
-#
+
+
 # @login_required
 # def edit_intern(request, pk):
-#     # print(123)
-#     # print(request.POST.get('exam_id', random.randint(100, 500)))
-#     exam = get_object_or_404(Exam, pk=pk)
-#
-#     if request.method == 'POST':
-#         form = CcEditInternForm(request.POST, instance=exam)
-#         # print(form)
-#         # print(form.cleaned_data['name_intern'])
-#         # print(form.cleaned_data['date_exam'])
-#         if form.is_valid():
-#             # Exam.object.filter(id=pk).update(
-#             #     name_intern=form.cleaned_data['name_intern'],
-#             #     date_exam=form.cleaned_data['date_exam'])
-#             # exam.date_exam = form.cleaned_data['date_exam']
-#             # exam.name_intern = form.cleaned_data['name_intern']
-#             # exam.save(update_fields=('date_exam', 'name_intern'))
-#             return redirect('exam:exam')
-#     else:
-#         form = CcEditInternForm(instance=exam)
-#     return render(request, 'exam/testing.html', {'form': form})
+# print(123)
+# print(request.POST.get('exam_id', random.randint(100, 500)))
+# exam = get_object_or_404(Exam, pk=pk)
 
+# if request.method == 'POST':
+#     form = CcEditInternForm(request.POST, instance=exam)
+# print(form)
+# print(form.cleaned_data['name_intern'])
+# print(form.cleaned_data['date_exam'])
+# if form.is_valid():
+# Exam.object.filter(id=pk).update(
+#     name_intern=form.cleaned_data['name_intern'],
+#     date_exam=form.cleaned_data['date_exam'])
+# exam.date_exam = form.cleaned_data['date_exam']
+# exam.name_intern = form.cleaned_data['name_intern']
+# exam.save(update_fields=('date_exam', 'name_intern'))
+# return redirect('exam:exam')
+# else:
+#     form = CcEditInternForm(instance=exam)
+# return render(request, 'exam/testing.html', {'form': form})
 
 
 # =====================================================================================================================
 
-"""
-Да, можно оптимизировать оба представления в одно, без потери качества. Объединение представлений может упростить код
-и сделать его более поддерживаемым. Вот пример, как это можно сделать:
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from exam.models import Exam
+class ExamView(LoginRequiredMixin, TemplateView):
+    template_name = 'exam/testing.html'
 
-@login_required
-def exam_view(request):
-    company = request.user.company
-    button_name = request.GET.get('btn', None)
-    
-    if company == "dm" and not button_name:
-        return render(request, 'exam/change_cc.html', {'title': 'Выбор КЦ', 'company': company})
-    
-    cc = button_name if company == "dm" else company
-    list_exam = Exam.objects.filter(cc=str(cc))
-    
-    context = {
-        'title': button_name if button_name else 'Зачеты',
-        'content': cc,
-        'list_exam': list_exam,
-        'company': company,
-    }
-    
-    return render(request, 'exam/testing.html', context)
+    def get(self, request, *args, **kwargs):
+        company = request.user.company
+        button_name = request.GET.get('btn', None)
+        form = AddInternForm()
+
+        if company == "dm" and not button_name:
+            return render(request, 'exam/change_cc.html', {'title': 'Выбор КЦ', 'company': company})
+
+        cc = button_name if company == "dm" else company
+        list_exam = Exam.objects.filter(cc=str(cc))
+
+        context = {
+            'title': button_name if button_name else 'Зачеты',
+            'content': cc,
+            'list_exam': list_exam,
+            'company': company,
+            'time': datetime.time(hour=0),
+            'form': form,
+        }
+        return self.render_to_response(context)
 
 
+class AddInternView(LoginRequiredMixin, FormView):
+    form_class = AddInternForm
+    template_name = 'exam:exam'
+    success_url = '/exam/'
+
+    def form_valid(self, form):
+        exam = form.save(commit=False)
+        exam.cc = self.request.user.company
+        print(exam.cc)
+        exam.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
 
+@method_decorator(login_required, name='dispatch')
+class ExamUpdateView(UpdateView):
+    model = Exam
+    form_class = AddInternForm
+    template_name = 'exam/update_intern.html'
+    context_object_name = 'exam'
 
-Объяснение:
+    def get_object(self, queryset=None):
+        exam_id = self.kwargs.get('pk')
+        return get_object_or_404(Exam, id=exam_id)
 
-Импортируем необходимые модули и декораторы:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        exam = self.get_object()
+        context['exam_date'] = exam.date_exam.strftime('%Y-%m-%d')
+        context['list_exam'] = Exam.objects.filter(cc=self.request.user.company)
+        return context
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from exam.models import Exam
-Объединённое представление exam_view:
-
-@login_required
-def exam_view(request):
-    company = request.user.company
-    button_name = request.GET.get('btn', None)
-    
-    if company == "dm" and not button_name:
-        return render(request, 'exam/change_cc.html', {'title': 'Выбор КЦ', 'company': company})
-    
-    cc = button_name if company == "dm" else company
-    list_exam = Exam.objects.filter(cc=str(cc))
-    
-    context = {
-        'title': button_name if button_name else 'Зачеты',
-        'content': cc,
-        'list_exam': list_exam,
-        'company': company,
-    }
-    
-    return render(request, 'exam/testing.html', context)
-Как это работает:
-
-Представление exam_view требует аутентификации пользователя.
-Получаем компанию пользователя: company = request.user.company.
-Получаем значение параметра btn из GET-запроса: button_name = request.GET.get('btn', None).
-Если компания пользователя равна "dm" и параметр btn не передан, рендерим шаблон change_cc.html для выбора компании.
-Определяем значение cc в зависимости от компании пользователя или параметра btn.
-Фильтруем экзамены по значению cc и сохраняем их в list_exam.
-Создаём контекст для шаблона и рендерим шаблон testing.html с этим контекстом.
-Преимущества объединения:
-
-Упрощение кода и уменьшение дублирования.
-Лучшая поддерживаемость и читаемость кода.
-Меньше вероятность ошибок при изменении логики представлений.
-Таким образом, объединённое представление будет работать так же хорошо, как и два отдельных представления, и даже лучше с точки зрения поддерживаемости и читаемости кода.
-"""
+    def form_valid(self, form):
+        exam = form.save(commit=False)
+        exam.cc = self.request.user.company
+        exam.save()
+        return redirect('exam:exam')
