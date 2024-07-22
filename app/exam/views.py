@@ -42,65 +42,66 @@ from exam.models import Exam
 #     return render(request, 'exam/testing.html', context)
 
 
-@login_required
-def exam_view(request):
-    # print(123)
-    # print(request.POST.get('exam_id', random.randint(100, 500)))
-    time = datetime.time(hour=0)
-    company = request.user.company
-    button_name = request.GET.get('btn', None)
-    form = AddInternForm()
-    if company == "dm" and not button_name:
-        return render(request, 'exam/change_cc.html', {'title': 'Выбор КЦ', 'company': company})
+# @login_required
+# def exam_view(request):
+#     # print(123)
+#     # print(request.POST.get('exam_id', random.randint(100, 500)))
+#     time = datetime.time(hour=0)
+#     company = request.user.company
+#     button_name = request.GET.get('btn', None)
+#     form = AddInternForm()
+#     if company == "dm" and not button_name:
+#         return render(request, 'exam/change_cc.html', {'title': 'Выбор КЦ', 'company': company})
+#
+#     cc = button_name if company == "dm" else company
+#     list_exam = Exam.objects.filter(cc=str(cc))
+#     context = {
+#         'title': button_name if button_name else 'Зачеты',
+#         'content': cc,
+#         'list_exam': list_exam,
+#         'company': company,
+#         'time': time,
+#         'form': form,
+#     }
+#     return render(request, 'exam/testing.html', context)
+#
+#
+# @login_required
+# def add_intern(request):
+#     if request.method == 'POST':
+#         form = AddInternForm(request.POST)
+#         if form.is_valid():
+#             exam = form.save(commit=False)
+#             exam.cc = request.user.company
+#             form.save()
+#             return redirect('exam:exam')
+#
+#     return render(request, 'exam/testing.html')
+#
+#
+# @login_required
+# def edit_intern(request, pk):
+#     # print(123)
+#     # print(request.POST.get('exam_id', random.randint(100, 500)))
+#     exam = get_object_or_404(Exam, pk=pk)
+#
+#     if request.method == 'POST':
+#         form = CcEditInternForm(request.POST, instance=exam)
+#         # print(form)
+#         # print(form.cleaned_data['name_intern'])
+#         # print(form.cleaned_data['date_exam'])
+#         if form.is_valid():
+#             # Exam.object.filter(id=pk).update(
+#             #     name_intern=form.cleaned_data['name_intern'],
+#             #     date_exam=form.cleaned_data['date_exam'])
+#             # exam.date_exam = form.cleaned_data['date_exam']
+#             # exam.name_intern = form.cleaned_data['name_intern']
+#             # exam.save(update_fields=('date_exam', 'name_intern'))
+#             return redirect('exam:exam')
+#     else:
+#         form = CcEditInternForm(instance=exam)
+#     return render(request, 'exam/testing.html', {'form': form})
 
-    cc = button_name if company == "dm" else company
-    list_exam = Exam.objects.filter(cc=str(cc))
-    context = {
-        'title': button_name if button_name else 'Зачеты',
-        'content': cc,
-        'list_exam': list_exam,
-        'company': company,
-        'time': time,
-        'form': form,
-    }
-    return render(request, 'exam/testing.html', context)
-
-
-@login_required
-def add_intern(request):
-    if request.method == 'POST':
-        form = AddInternForm(request.POST)
-        if form.is_valid():
-            exam = form.save(commit=False)
-            exam.cc = request.user.company
-            form.save()
-            return redirect('exam:exam')
-
-    return render(request, 'exam/testing.html')
-
-
-@login_required
-def edit_intern(request, pk):
-    # print(123)
-    # print(request.POST.get('exam_id', random.randint(100, 500)))
-    exam = get_object_or_404(Exam, pk=pk)
-
-    if request.method == 'POST':
-        form = CcEditInternForm(request.POST, instance=exam)
-        # print(form)
-        # print(form.cleaned_data['name_intern'])
-        # print(form.cleaned_data['date_exam'])
-        if form.is_valid():
-            # Exam.object.filter(id=pk).update(
-            #     name_intern=form.cleaned_data['name_intern'],
-            #     date_exam=form.cleaned_data['date_exam'])
-            # exam.date_exam = form.cleaned_data['date_exam']
-            # exam.name_intern = form.cleaned_data['name_intern']
-            # exam.save(update_fields=('date_exam', 'name_intern'))
-            return redirect('exam:exam')
-    else:
-        form = CcEditInternForm(instance=exam)
-    return render(request, 'exam/testing.html', {'form': form})
 
 
 # =====================================================================================================================
