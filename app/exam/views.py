@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 
 from django.views.generic import UpdateView, DetailView, TemplateView, FormView
 
-from exam.forms import AddInternForm
+from exam.forms import AddInternForm, EditInternForm
 from exam.models import Exam
 
 
@@ -153,6 +153,18 @@ class AddInternView(LoginRequiredMixin, FormView):
 @method_decorator(login_required, name='dispatch')
 class ExamUpdateView(UpdateView):
     model = Exam
+
+    def dispatch(self, request, *args, **kwargs):
+        self.user = request.user  # Получение пользователя и сохранение его как атрибут класса
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_class(self):
+
+        if self.user.company != 'dm':
+            return AddInternForm
+        else:
+            return EditInternForm
+
     form_class = AddInternForm
     template_name = 'exam/update_intern.html'
     context_object_name = 'exam'
@@ -165,11 +177,16 @@ class ExamUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         exam = self.get_object()
         context['exam_date'] = exam.date_exam.strftime('%Y-%m-%d')
-        context['list_exam'] = Exam.objects.filter(cc=self.request.user.company)
+        context['list_exam'] = Exam.objects.filter(cc=exam.cc)
+        context['cc'] = exam.cc
         return context
 
     def form_valid(self, form):
         exam = form.save(commit=False)
-        exam.cc = self.request.user.company
         exam.save()
-        return redirect('exam:exam')
+        return redirect("exam:exam")
+
+
+class CheckListView(LoginRequiredMixin, TemplateView):
+    template_name = 'exam/checklist.html'
+    context_object_name = 'exam'

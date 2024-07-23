@@ -21,7 +21,7 @@
       </div>
       <div class="square2">
         <img src="{% static "deps/img/square2.png" %}" alt="square2">
-        <a href="./checklist.html"><button title="Вход в раздел"><h3>Чек-лист</h3></button></a>
+        <a href={% url "exam:CheckList" %}><button title="Вход в раздел"><h3>Чек-лист</h3></button></a>
       </div>
       <div class="personal">
         <img src="{% static "deps/img/personal.png" %}" alt="personal">
@@ -35,6 +35,7 @@
           <div class="time" id="time"></div>
     </section>
 
+  {% include "exam/index.html" %}
   <script>
       function updateClock() {
           const now = new Date();

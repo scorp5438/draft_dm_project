@@ -1,4 +1,30 @@
+@font-face {
+  font-family: "fontawesome1";
+  src: url("/fonts/CRA65DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: "fontawesome2";
+  src: url("/fonts/CRO55DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome3";
+  src: url("/fonts/CRO35DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontawesome4";
+  src: url("/fonts/CRO25DM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 .add_intern{
 
   background-color: rgba(105, 155, 247, 1);
@@ -29,4 +55,14 @@
     text-decoration: none;
 }
 
+.test2 {
+    width: 100%;
+    padding: 10px;
+    max-width: 537px;
+    max-height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+    font-family: "fontawesome2", sans-serif;
+}
 
