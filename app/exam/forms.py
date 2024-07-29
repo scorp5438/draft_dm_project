@@ -26,8 +26,7 @@ class EditInternForm(forms.ModelForm):
                 'placeholder': 'Выбрать проверяющего',
                 'class': 'test2'}),
             'result_exam': forms.Select(attrs={
-                'class': 'test2'
-            }),
+                'class': 'test2'}),
             'comment_exam': forms.Textarea(attrs={
                 'class': 'test2',
                 'placeholder': 'Комментарий к зачету',

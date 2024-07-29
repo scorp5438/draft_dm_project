@@ -46,10 +46,7 @@ def login_view(request: HttpRequest):
     password = request.POST['password']
 
     user = authenticate(request, username=username, password=password)
-    # user_name = user.username
-    # company = user.company
-    # post = user.post
-    # print(f"username - {user_name}\ncompany - {company}\npost - {post}")
+
     if user is not None:
         login(request, user)
         return redirect("/")
